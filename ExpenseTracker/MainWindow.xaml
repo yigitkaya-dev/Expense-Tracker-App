@@ -3,6 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Expense Tracker" Height="800" Width="850">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- First row for inputs -->
+            <RowDefinition Height="Auto"/>  <!-- Second row for password -->
+            <RowDefinition Height="*"/>     <!-- Third row for the list -->
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />  <!-- Larger for Description -->
             <ColumnDefinition Width="1*" />  <!-- Smaller for Amount -->
@@ -10,19 +16,15 @@
             <ColumnDefinition Width="1*" /> <!-- Button Column -->
         </Grid.ColumnDefinitions>
 
-        <!-- Labels for Text Fields -->
-        <TextBlock Text="Description" Grid.Column="0" Margin="10,5,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock Text="Amount ($)" Grid.Column="1" Margin="10,5,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock Text="Category" Grid.Column="2" Margin="10,5,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <!-- Labels for Inputs -->
+        <TextBlock Text="Description" Grid.Row="0" Grid.Column="0" Margin="10,5,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock Text="Amount ($)" Grid.Row="0" Grid.Column="1" Margin="10,5,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock Text="Category" Grid.Row="0" Grid.Column="2" Margin="10,5,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
-        <!-- Description Input -->
-        <TextBox Name="txtDescription" Width="200" Height="25" Grid.Column="0" Margin="10,25,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-
-        <!-- Amount Input -->
-        <TextBox Name="txtAmount" Width="100" Height="25" Grid.Column="1" Margin="10,25,10,0" VerticalAlignment="Top"/>
-
-        <!-- Category Dropdown -->
-        <ComboBox Name="categoryDropdown" Width="150" Height="25" Grid.Column="2" Margin="10,25,10,0" VerticalAlignment="Top">
+        <!-- Input Fields -->
+        <TextBox Name="txtDescription" Width="200" Height="25" Grid.Row="0" Grid.Column="0" Margin="10,25,10,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <TextBox Name="txtAmount" Width="100" Height="25" Grid.Row="0" Grid.Column="1" Margin="10,25,10,0" VerticalAlignment="Top"/>
+        <ComboBox Name="categoryDropdown" Width="150" Height="25" Grid.Row="0" Grid.Column="2" Margin="10,25,10,0" VerticalAlignment="Top">
             <ComboBoxItem Content="Food"/>
             <ComboBoxItem Content="Rent"/>
             <ComboBoxItem Content="Transport"/>
@@ -31,11 +33,15 @@
             <ComboBoxItem Content="Misc"/>
         </ComboBox>
 
-        <!-- Add Expense Button -->
-        <Button Content="Add Expense" Click="AddExpense_Click" Width="100" Height="30" Grid.Column="3" Margin="10,25,10,0" VerticalAlignment="Top"/>
+        <!-- Add Expense Button (Now aligned with inputs) -->
+        <Button Content="Add Expense" Click="AddExpense_Click" Width="100" Height="30" Grid.Row="0" Grid.Column="3" Margin="10,25,10,0" VerticalAlignment="Top"/>
+
+        <!-- Password Input Below -->
+        <TextBlock Text="Password" Grid.Row="1" Grid.Column="0" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <PasswordBox Name="txtPassword" Width="150" Height="25" Grid.Row="1" Grid.Column="1" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
         <!-- Expenses List -->
-        <ListView Name="lstExpenses" Margin="10,70,10,10" Grid.ColumnSpan="4">
+        <ListView Name="lstExpenses" Margin="10,90,10,10" Grid.Row="2" Grid.ColumnSpan="4">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Description" Width="250" DisplayMemberBinding="{Binding Description}"/>
@@ -44,5 +50,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
     </Grid>
 </Window>

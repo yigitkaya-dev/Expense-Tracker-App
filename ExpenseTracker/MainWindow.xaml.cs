@@ -31,23 +31,40 @@ namespace ExpenseTracker
             }
         }
 
+        private const string CorrectPassword = "1234"; // Ideally, store securely
+
         private void AddExpense_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (txtPassword.Password != CorrectPassword)
+            {
+                MessageBox.Show("Incorrect password. Access denied.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             if (decimal.TryParse(txtAmount.Text, out decimal amount) && !string.IsNullOrWhiteSpace(txtDescription.Text))
             {
-                var newExpense = new Expense { Description = txtDescription.Text, Amount = amount };
+                
+
+                var newExpense = new Expense
+                {
+                    Description = txtDescription.Text,
+                    Amount = amount,
+                    
+                };
+
                 _db.Expenses.Add(newExpense);
                 _db.SaveChanges();
-                
-                Expenses.Add(newExpense); // Update UI
+                Expenses.Add(newExpense);
+
                 txtDescription.Clear();
                 txtAmount.Clear();
+                txtPassword.Clear();
             }
             else
             {
                 MessageBox.Show("Please enter a valid description and amount.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
     }
 }
